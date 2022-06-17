@@ -75,8 +75,28 @@ public fun Modifier.fadeAwayLazyList(scrollStateFn: () -> LazyListState): Modifi
  * @param initialIndex The initial index must match that provided to [ScalingLazyListState].
  * @param initialOffset The initial offset must match that provided to [ScalingLazyListState].
  */
+//@ExperimentalHorologistComposeLayoutApi
+//public fun Modifier.fadeAwayScalingLazyList(
+//    initialIndex: Int = 1,
+//    initialOffset: Int = 0,
+//    scrollStateFn: () -> ScalingLazyListState,
+//): Modifier =
+//    composed {
+//        val scrollState = remember { scrollStateFn() }
+//
+//        if (scrollState.centerItemIndex == initialIndex && scrollState.centerItemScrollOffset > initialOffset) {
+//            val y = scrollState.centerItemScrollOffset / LocalDensity.current.density
+//
+//            fadeEffect(y, fade = true)
+//        } else if (scrollState.centerItemIndex > initialIndex) {
+//            alpha(0.0f)
+//        } else {
+//            this
+//        }
+//    }
+
 @ExperimentalHorologistComposeLayoutApi
-public fun Modifier.fadeAwayScalingLazyList(
+fun Modifier.fadeAwayScalingLazyList(
     initialIndex: Int = 1,
     initialOffset: Int = 0,
     scrollStateFn: () -> ScalingLazyListState,
@@ -84,9 +104,11 @@ public fun Modifier.fadeAwayScalingLazyList(
     composed {
         val scrollState = remember { scrollStateFn() }
 
-        if (scrollState.centerItemIndex == initialIndex && scrollState.centerItemScrollOffset > initialOffset) {
-            val y = scrollState.centerItemScrollOffset / LocalDensity.current.density
+        val isInitial by derivedStateOf { scrollState.centerItemIndex == initialIndex }
+        val centerItemScrollOffset by derivedStateOf { scrollState.centerItemScrollOffset }
 
+        if (isInitial && centerItemScrollOffset > initialOffset) {
+            val y = centerItemScrollOffset / LocalDensity.current.density
             fadeEffect(y, fade = true)
         } else if (scrollState.centerItemIndex > initialIndex) {
             alpha(0.0f)
@@ -94,6 +116,7 @@ public fun Modifier.fadeAwayScalingLazyList(
             this
         }
     }
+
 
 private fun Modifier.fadeEffect(y: Float, fade: Boolean) = composed {
     if (fade) {

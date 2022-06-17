@@ -60,6 +60,17 @@
         </activity>
 
         <activity
+            android:name="com.google.android.horologist.nav.SimpleNavActivity"
+            android:icon="@mipmap/ic_launcher_nav"
+            android:exported="true"
+            android:label="Very simple nav">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.google.android.horologist.scratch.ScratchActivity"
             android:exported="true"
             android:label="@string/nav_activity">
