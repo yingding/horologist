@@ -174,6 +174,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
 
     implementation(libs.coil)
+    implementation(libs.charty)
 
     implementation(libs.lottie.compose)
 

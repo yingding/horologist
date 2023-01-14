@@ -97,6 +97,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { setUrl("https://jitpack.io") } // for charty v1.0.2-alpha01
 
         val composeSnapshot = rootProject.libs.versions.composesnapshot.get()
         if (composeSnapshot.length > 1) {
